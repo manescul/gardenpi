@@ -50,10 +50,10 @@ class Login:
         if auth is None:
             authreq = True
         else:
-			if validateUser(auth):
-				raise web.seeother('/')
-			else:
-				authreq = True
+            if validateUser(auth):
+                raise web.seeother('/')
+            else:
+                authreq = True
         if authreq:
             web.header('WWW-Authenticate','Basic realm="WaterPI"')
             web.ctx.status = '401 Unauthorized'
@@ -69,8 +69,8 @@ class Operations:
 			return "Success"
 			
 def validateUser(auth):
-	auth = re.sub('^Basic ','',auth)
-	username,password = base64.decodestring(auth).split(':')
+	auth = re.sub('^Basic ','',auth)	
+	username,password = base64.b64decode(auth).decode('utf-8').split(':')
 	if (username, password) in users:
 		return True
 	else:
